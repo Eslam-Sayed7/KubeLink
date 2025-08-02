@@ -1,0 +1,28 @@
+# Ignore build output folders
+bin/
+obj/
+
+# Ignore user-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Ignore Visual Studio Code workspace
+.vscode/
+
+# Ignore Rider IDE files
+.idea/
+
+# Ignore logs, lock files, and backup files
+*.log
+Logs/
+*.lock
+*.bak
+*.tmp
+
+.fake
+.env
+
+# ignore appsettings till adjusting local vars parsing
+appsettings*.json
