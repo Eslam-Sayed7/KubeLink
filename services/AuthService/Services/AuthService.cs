@@ -69,7 +69,7 @@ public class AuthService : IAuthService
 
         var UserCreation = await _userManager.CreateAsync(user, model.Password);
 
-        var RoleSetting = await _userManager.AddToRoleAsync(user, "Student");
+        var RoleSetting = await _userManager.AddToRoleAsync(user, "User");
 
         if (!UserCreation.Succeeded || !RoleSetting.Succeeded)
         {
@@ -86,14 +86,14 @@ public class AuthService : IAuthService
         user.Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
         user.RefreshTokens.Add(GenerateRefreshToken());
 
-        _logger.Information("User {UserId} registered successfully with roles: {Roles}", user.Id, "Student");
+        _logger.Information("User {UserId} registered successfully with roles: {Roles}", user.Id, "User");
         return new AuthModel
         {
-            Message = $"User {user.Email} registered Successflly as User",
+            Message = $"User {user.Email} registered Successfully as User",
             User = user,
             Email = user.Email,
             IsAuthenticated = true,
-            Roles = new List<string> { "Student" },
+            Roles = new List<string> { "User" },
             Username = user.UserName,
             Token = user.Token,
             RefreshToken = user.RefreshTokens.SingleOrDefault(t => t.IsActive)?.Token,
