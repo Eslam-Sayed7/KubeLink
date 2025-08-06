@@ -1,0 +1,9 @@
+bin/
+obj/
+*.md
+*.user
+*.suo
+*.git
+.vscode
+Dockerfile
+docker-compose.*

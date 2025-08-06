@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shorten-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shorten-service
+  template:
+    metadata:
+      labels:
+        app: shorten-service
+    spec:
+      containers:
+        - name: shorten-service
+          image: shortenservice:latest
+          ports:
+            - containerPort: 80
+          env:
+            - name: ConnectionStrings__DefaultConnection
+              value: "Host=shorten-db-service;Port=5432;Database=shortendb;Username=postgres;Password=postgres_password"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: shorten-service
+spec:
+  selector:
+    app: shorten-service
+  ports:
+    - port: 80
+      targetPort: 80
+  type: ClusterIP
+
