@@ -8,7 +8,6 @@ services/AuthService/logs/
 *.suo
 *.userosscache
 *.sln.docstates
-
 # Ignore Visual Studio Code workspace
 .vscode/
 
@@ -27,3 +26,4 @@ Logs/
 
 # ignore appsettings till adjusting local vars parsing
 appsettings*.json
+secret.yaml
