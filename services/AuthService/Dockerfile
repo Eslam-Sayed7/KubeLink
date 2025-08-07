@@ -14,9 +14,10 @@ RUN dotnet build -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS Publish
 ARG BUILD_CONFIGURATION=Release 
-RUN dotnet publish "AuthService.csproj" -c $BUILD_CONFIGURATION -o /app/publish --no-restore -p:PublishTrimmed=true
+RUN dotnet publish "AuthService.csproj" -c $BUILD_CONFIGURATION -o /app/publish --no-restore -p:PublishTrimmed=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=Publish /app/publish .
+COPY appsettings.json ./appsettings.json
 ENTRYPOINT ["dotnet", "AuthService.dll"]
