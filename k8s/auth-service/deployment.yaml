@@ -15,11 +15,15 @@ spec:
       containers:
         - name: auth-service
           image: authservice:latest
+          imagePullPolicy: Never 
           ports:
             - containerPort: 80
           env:
             - name: ConnectionStrings__DefaultConnection
-              value: "Host=auth-db-service;Port=5432;Database=authdb;Username=postgres;Password=postgres_password"
+              valueFrom:
+                secretKeyRef:
+                  name: auth-db-secret
+                  key: ConnectionStrings__DefaultConnection
 ---
 apiVersion: v1
 kind: Service
