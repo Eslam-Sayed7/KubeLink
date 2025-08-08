@@ -1,0 +1,21 @@
+meta {
+  name: post /api/Auth/GetRole
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{baseUrl}}/api/Auth/GetRole
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authToken}}
+}
+
+body:json {
+  {
+    "userId": "a3e98e5a-70ba-42a8-a31d-7e966d40f073"
+  }
+}

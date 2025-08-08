@@ -1,6 +1,7 @@
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
 WORKDIR /app
-EXPOSE 8080
+ENV ASPNETCORE_URLS=http://0.0.0.0:80
+EXPOSE 80
 EXPOSE 8081
 
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
@@ -19,5 +20,4 @@ RUN dotnet publish "AuthService.csproj" -c $BUILD_CONFIGURATION -o /app/publish 
 FROM base AS final
 WORKDIR /app
 COPY --from=Publish /app/publish .
-COPY appsettings.json ./appsettings.json
 ENTRYPOINT ["dotnet", "AuthService.dll"]

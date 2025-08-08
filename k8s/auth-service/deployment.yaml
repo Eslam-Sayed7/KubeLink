@@ -24,6 +24,22 @@ spec:
                 secretKeyRef:
                   name: auth-db-secret
                   key: ConnectionStrings__DefaultConnection
+            - name: Jwt__Key
+              valueFrom:
+                secretKeyRef:
+                  name: auth-db-secret
+                  key: Jwt__Key
+            - name: Jwt__Audience
+              valueFrom:
+                secretKeyRef:
+                  name: auth-db-secret
+                  key: Jwt__Audience 
+            - name: Jwt__Issuer
+              valueFrom:
+                secretKeyRef:
+                  name: auth-db-secret
+                  key: Jwt__Issuer 
+
 ---
 apiVersion: v1
 kind: Service

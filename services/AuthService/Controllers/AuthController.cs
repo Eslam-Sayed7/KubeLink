@@ -89,13 +89,12 @@ namespace AuthService.Controllers
             var result = await _authService.AddRoleAsync(model);
 
             if (!result.IsSuccess)
-            if (!result.IsSuccess)
                 return BadRequest(result);
 
             return Ok(model);
         }
             
-        [Authorize(Roles = "Admin , Instructor , Student")]
+        [Authorize(Roles = "Admin , User")]
         [HttpPost("GetRole")]
         public async Task<ActionResult<UserRoleDto>> GetRoleAsync([FromBody] GetRoleModel model)
         {

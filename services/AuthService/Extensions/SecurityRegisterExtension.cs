@@ -13,10 +13,10 @@ public static class SecurityRegisterExtension
     {
         builder.Services.Configure<JWT>(options =>
         {
-            options.Key = Environment.GetEnvironmentVariable("JWT__KEY");
-            options.Issuer = Environment.GetEnvironmentVariable("JWT__ISSUER");
-            options.Audience = Environment.GetEnvironmentVariable("JWT__AUDIENCE");
-            options.DurationInMinutes = int.Parse(Environment.GetEnvironmentVariable("JWT__DURATION") ?? "1");
+            options.Key = Environment.GetEnvironmentVariable("Jwt__Key");
+            options.Issuer = Environment.GetEnvironmentVariable("Jwt__ISSUER");
+            options.Audience = Environment.GetEnvironmentVariable("Jwt__AUDIENCE");
+            options.DurationInMinutes = int.Parse(Environment.GetEnvironmentVariable("Jwt__URATION") ?? "1");
         });
 
         builder.Services.AddIdentity<AppUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -39,9 +39,9 @@ public static class SecurityRegisterExtension
                     ValidateIssuer = true,
                     ValidateAudience = true,
                     ValidateLifetime = true,
-                    ValidIssuer = Environment.GetEnvironmentVariable("JWT__ISSUER"),
-                    ValidAudience = Environment.GetEnvironmentVariable("JWT__AUDIENCE"),
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("JWT__KEY"))),
+                    ValidIssuer = Environment.GetEnvironmentVariable("Jwt__Issuer"),
+                    ValidAudience = Environment.GetEnvironmentVariable("Jwt__Audience"),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("Jwt__Key"))),
                     ClockSkew = TimeSpan.Zero
                 };
             });

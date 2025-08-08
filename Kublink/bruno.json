@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "Kublink",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}
