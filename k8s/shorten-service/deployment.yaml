@@ -20,12 +20,16 @@ spec:
             - containerPort: 80
           env:
             - name: ConnectionStrings__DefaultConnection
-              value: "Host=shorten-db-service;Port=5432;Database=shortendb;Username=postgres;Password=postgres_password"
+              valueFrom:
+                secretKeyRef:
+                  name: shorten-db-secret
+                  key: ConnectionStrings__DefaultConnection
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: shorten-service
+  namespace: kubelink
 spec:
   selector:
     app: shorten-service

@@ -1,0 +1,33 @@
+apiVersion: k8s.nginx.org/v1
+kind: VirtualServer
+metadata:
+  name: url-shortener
+  namespace: kubelink
+spec:
+  host: kubelink.com
+  tls:  
+    secret: kubelink-tls
+  policies:
+  - name: jwt-policy
+  upstreams:
+  - name: auth-service
+    service: auth-service  # Must match exact service name
+    port: 80
+  - name: shorten-service
+    service: url-shortener-service  # Fixed to match your actual service
+    port: 80
+  routes:
+  - path: /shorten/
+    action:
+      proxy:
+        upstream: shorten-service
+    policies:
+    - name: jwt-policy
+  - path: api/Auth/register
+    action:
+      pass: auth-service
+  - path: /
+    action:
+      redirect:
+        url: /api/Auth/
+        code: 302
