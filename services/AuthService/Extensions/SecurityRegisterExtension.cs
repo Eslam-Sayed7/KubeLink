@@ -14,9 +14,9 @@ public static class SecurityRegisterExtension
         builder.Services.Configure<JWT>(options =>
         {
             options.Key = Environment.GetEnvironmentVariable("Jwt__Key");
-            options.Issuer = Environment.GetEnvironmentVariable("Jwt__ISSUER");
-            options.Audience = Environment.GetEnvironmentVariable("Jwt__AUDIENCE");
-            options.DurationInMinutes = int.Parse(Environment.GetEnvironmentVariable("Jwt__URATION") ?? "1");
+            options.Issuer = Environment.GetEnvironmentVariable("Jwt__Issuer");
+            options.Audience = Environment.GetEnvironmentVariable("Jwt__Audience");
+            options.DurationInMinutes = int.Parse(Environment.GetEnvironmentVariable("Jwt__DURATION") ?? "1");
         });
 
         builder.Services.AddIdentity<AppUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
