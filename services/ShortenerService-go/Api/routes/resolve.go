@@ -1,36 +1,36 @@
 package routes
 
 import (
-	"../database"
+	"ShortenerService/database"
+
 	"github.com/go-redis/redis/v8"
 	"github.com/gofiber/fiber/v2"
 )
 
 func ResolveURL(c *fiber.Ctx) error {
 
-	url:= c.Params("url")
+	url := c.Params("url")
 
-	r:= database.CreateClient(0)
+	r := database.CreateClient(0)
 	defer r.Close()
 
-	value , err := r.Get(database.Ctx, url).Result()
+	value, err := r.Get(database.Ctx, url).Result()
 
 	if err == redis.Nil {
 
 		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
-			"error" : "short not found"
-		}) 
+			"error": "short not found",
+		})
 
 	} else if err != nil {
-			return c.Status(fiber.StatusInternalError).JSON(fiber.Map{
-			"error" : "Can not connection to the database"
-		})
+
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Can not connection to the database"})
 	}
 
 	rInr := database.CreateClient(1)
 	defer rInr.Close()
 
-	_ = rInr.Incr(database.Ctx,	"counter")
+	_ = rInr.Incr(database.Ctx, "counter")
 
-	return c.Redirect(value , 301)
+	return c.Redirect(value, 301)
 }
