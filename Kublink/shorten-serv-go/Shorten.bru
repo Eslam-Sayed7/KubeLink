@@ -1,0 +1,21 @@
+meta {
+  name: Shorten
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:3000/api/v1
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "url" : "https://www.youtube.com"
+  }
+}

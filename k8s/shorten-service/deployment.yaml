@@ -1,40 +1,58 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: shorten-service
-  namespace: kubelink
+  name: shortener
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: shorten-service
+      app: shortener
   template:
     metadata:
       labels:
-        app: shorten-service
+        app: shortener
     spec:
       containers:
-        - name: shorten-service
-          image: shortenservice:latest
+        - name: shortener
+          image: shortenservice:latest 
+          imagePullPolicy: Never
           ports:
-            - containerPort: 80
+            - containerPort: 3000
           env:
-            - name: ConnectionStrings__DefaultConnection
+            - name: DB_ADDR
               valueFrom:
                 secretKeyRef:
-                  name: shorten-db-secret
-                  key: ConnectionStrings__DefaultConnection
+                  name: shortener-secret
+                  key: DB_ADDR
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: shortener-secret
+                  key: DB_PASS
+            - name: APP_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: shortener-config
+                  key: APP_PORT
+            - name: DOMAIN
+              valueFrom:
+                configMapKeyRef:
+                  name: shortener-config
+                  key: DOMAIN
+            - name: API_QOUTA
+              valueFrom:
+                configMapKeyRef:
+                  name: shortener-config
+                  key: API_QOUTA
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: shorten-service
-  namespace: kubelink
+  name: shortener
 spec:
   selector:
-    app: shorten-service
+    app: shortener
   ports:
-    - port: 80
-      targetPort: 80
-  type: ClusterIP
-
+    - port: 3000
+      targetPort: 3000
+  type: ClusterIP 

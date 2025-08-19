@@ -1,21 +1,13 @@
-# Stage 1: build
-FROM golang:alpine as builder
-
-RUN mkdir /build
-ADD ./build/ /build/
-WORKDIR /build
-
-RUN go build -o main .
-
-# Stage 2: runtime
-FROM alpine
-
-RUN adduser -S -D -H -h /app appuser
-USER appuser
-
-COPY --from=builder /build/main /app/
+# Build stage
+FROM golang:1.23 AS builder
 WORKDIR /app
+COPY . .
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o main .
 
+# Run stage
+FROM alpine
+WORKDIR /app
+COPY --from=builder /app/main .
+COPY .env .
 EXPOSE 3000
-
 CMD ["./main"]

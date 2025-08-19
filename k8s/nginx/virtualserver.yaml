@@ -13,7 +13,7 @@ spec:
   - name: auth-service
     service: auth-service  # Must match exact service name
     port: 80
-  - name: shorten-service
+  - name: shortener
     service: url-shortener-service  # Fixed to match your actual service
     port: 80
   routes:
