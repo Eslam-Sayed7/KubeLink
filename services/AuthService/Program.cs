@@ -29,5 +29,5 @@ app.UseDefaultFiles();
 app.UseAuthentication();
 app.ApplyMigrations();
 app.UseAuthorization();
-app.MapControllers();
+app.MapControllersqwpwpq]();
 app.Run();
