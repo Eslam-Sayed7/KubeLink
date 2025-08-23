@@ -1,0 +1,27 @@
+
+name: Check merge conflicts
+on:
+    pull_request:
+        branches:
+            - master
+jobs:
+    check-merge-conflict:
+        runs-on: ${{ matrix.os }}
+        strategy:
+            matrix:
+                os: [ubuntu-latest, windows-latest]
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+              with:
+                  fetch-depth: 0
+            - name: Fetch main branch
+              run: git fetch origin master:master
+            - name: Check for merge conflicts
+              run: | 
+                  if ! git merge-base --is-ancestor master HEAD; then
+                      echo "Merge conflicts detected with the master branch. Please resolve them before merging.";
+                      exit 1;
+                  else
+                      echo "No merge conflicts detected with the master branch.";
+                  fi
