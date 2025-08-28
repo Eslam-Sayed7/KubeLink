@@ -27,3 +27,6 @@ Logs/
 # ignore appsettings till adjusting local vars parsing
 appsettings*.json
 secret.yaml
+
+#k86 secrets
+jwt-secret.yaml

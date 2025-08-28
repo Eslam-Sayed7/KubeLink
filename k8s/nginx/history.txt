@@ -1,2 +1,0 @@
-jwt-policy.yaml:apiVersion: k8s.nginx.org/v1
-virtualserver.yaml:apiVersion: k8s.nginx.org/v1
